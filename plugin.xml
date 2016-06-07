@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	id="net-pluservice-bluebird-barcode"
+	version="1.0.0">
+
+	<name>PLUS BLUEBIRD Barcode Scanner</name>
+	<description>Pluservice BLUEBIRD Barcode Scanner</description>
+	<license>MIT</license>
+    <keywords>cordova,bluebird,barcode</keywords>
+    <repo></repo>
+    <issue></issue>
+
+	<js-module src="www/barcodeScanner.js" name="BluebirdBarcode">
+		<clobbers target="cordova.plugins.plusBluebirdBarcode" />
+	</js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="BarcodeScanner">
+                <param name="android-package" value="net.pluservice.bluebird.BarcodeScanner"/>
+            </feature>
+        </config-file>
+
+		<source-file src="src/android/BarcodeScanner.java" target-dir="src/net/pluservice/bluebird" />
+    </platform>
+
+	<!--
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <receiver android:name="net.pluservice.bluebird.BarcodeReceiver">
+                <intent-filter>
+                    <action android:name="net.pluservice.bluebird.BarcodeReceiver.BLUEBIRD_BARCODE_CALLBACK_DECODING_DATA" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+                <intent-filter>
+                    <action android:name="net.pluservice.bluebird.BarcodeReceiver.BLUEBIRD_BARCODE_CALLBACK_REQUEST_FAILED" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </receiver>
+        </config-file>
+
+		<source-file src="src/android/BarcodeReceiver.java" target-dir="src/net/pluservice" />
+    </platform>
+	-->
+</plugin>

@@ -1,0 +1,24 @@
+{
+	"name": "net-pluservice-bluebird-barcode",
+	"version": "1.0.0",
+    "description": "Pluservice BLUEBIRD Barcode Scanner",
+	"cordova": {
+		"id": "net-pluservice-bluebird-barcode",
+		"platforms": [
+			"android"
+		]
+	},
+	"keywords": [
+		"cordova",
+		"android",
+		"install",
+		"ecosystem:cordova",
+		"cordova-android"
+	],
+	"engines": [
+		{
+			"name": "cordova",
+			"version": ">=3.0.0"
+		}
+	]
+}
