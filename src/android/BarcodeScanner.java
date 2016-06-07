@@ -17,37 +17,30 @@ import org.json.JSONObject;
 
 public class BarcodeScanner extends CordovaPlugin {
 	// Constants
-	public static final String ACTION_BARCODE_CLOSE				= "kr.co.bluebird.android.bbapi.action.BARCODE_CLOSE";
-	public static final String ACTION_BARCODE_DECODING_DATA		= "kr.co.bluebird.android.bbapi.action.BARCODE_CALLBACK_DECODING_DATA";
-	public static final String ACTION_BARCODE_OPEN				= "kr.co.bluebird.android.bbapi.action.BARCODE_OPEN";
-	public static final String ACTION_BARCODE_REQUEST_FAILED	= "kr.co.bluebird.android.bbapi.action.BARCODE_CALLBACK_REQUEST_FAILED";
-	public static final String ACTION_BARCODE_REQUEST_SUCCESS	= "kr.co.bluebird.android.bbapi.action.BARCODE_CALLBACK_REQUEST_SUCCESS";
-	public static final String ACTION_BARCODE_SET_TRIGGER		= "kr.co.bluebird.android.bbapi.action.BARCODE_SET_TRIGGER";
+	public static final String ACTION_BARCODE_CLOSE           = "kr.co.bluebird.android.bbapi.action.BARCODE_CLOSE";
+	public static final String ACTION_BARCODE_DECODING_DATA   = "kr.co.bluebird.android.bbapi.action.BARCODE_CALLBACK_DECODING_DATA";
+	public static final String ACTION_BARCODE_OPEN            = "kr.co.bluebird.android.bbapi.action.BARCODE_OPEN";
+	public static final String ACTION_BARCODE_REQUEST_FAILED  = "kr.co.bluebird.android.bbapi.action.BARCODE_CALLBACK_REQUEST_FAILED";
+	public static final String ACTION_BARCODE_REQUEST_SUCCESS = "kr.co.bluebird.android.bbapi.action.BARCODE_CALLBACK_REQUEST_SUCCESS";
+	public static final String ACTION_BARCODE_SET_TRIGGER     = "kr.co.bluebird.android.bbapi.action.BARCODE_SET_TRIGGER";
 
-	public static final String EXTRA_HANDLE						= "EXTRA_HANDLE";
-	public static final String EXTRA_STR_DATA1					= "EXTRA_STR_DATA1";
-	public static final String EXTRA_INT_DATA2					= "EXTRA_INT_DATA2";
-	public static final String EXTRA_INT_DATA3					= "EXTRA_INT_DATA3";
-	public static final String EXTRA_DECODING_DATA				= "EXTRA_BARCODE_DECODING_DATA";
+	public static final String EXTRA_HANDLE        = "EXTRA_HANDLE";
+	public static final String EXTRA_STR_DATA1     = "EXTRA_STR_DATA1";
+	public static final String EXTRA_INT_DATA2     = "EXTRA_INT_DATA2";
+	public static final String EXTRA_INT_DATA3     = "EXTRA_INT_DATA3";
+	public static final String EXTRA_DECODING_DATA = "EXTRA_BARCODE_DECODING_DATA";
 
-	public static final int ERROR_FAILED						= -1;
-	public static final int ERROR_NOT_SUPPORTED					= -2;
-	public static final int ERROR_NO_RESPONSE					= -4;
-	public static final int ERROR_BATTERY_LOW					= -5;
-	public static final int ERROR_BARCODE_DECODING_TIMEOUT		= -6;
-	public static final int ERROR_BARCODE_ERROR_USE_TIMEOUT		= -7;
-	public static final int ERROR_BARCODE_ERROR_ALREADY_OPENED	= -8;
-
-	public static final int SEQUENCE_UNKNOWN					= 0;
-	public static final int SEQUENCE_OPEN						= 100;
-	public static final int SEQUENCE_SET_TRIGGER_ON				= 200;
-	public static final int SEQUENCE_SET_TRIGGER_OFF			= 300;
-	public static final int SEQUENCE_CLOSE						= 400;
+	public static final int ERROR_FAILED                       = -1;
+	public static final int ERROR_NOT_SUPPORTED                = -2;
+	public static final int ERROR_NO_RESPONSE                  = -4;
+	public static final int ERROR_BATTERY_LOW                  = -5;
+	public static final int ERROR_BARCODE_DECODING_TIMEOUT     = -6;
+	public static final int ERROR_BARCODE_ERROR_USE_TIMEOUT    = -7;
+	public static final int ERROR_BARCODE_ERROR_ALREADY_OPENED = -8;
 
 	// Variables
 	private CallbackContext barcodeContext;
 	private int barcodeHandle;
-	// private boolean barcodeOpened = false;
 	private boolean barcodeRegistered = false;
 
 	// Functions
@@ -56,7 +49,7 @@ public class BarcodeScanner extends CordovaPlugin {
 		// Execute
 		try {
 			// Context
-            barcodeContext = callbackContext;
+			barcodeContext = callbackContext;
 
 			// Result
 			PluginResult result = null;
@@ -100,7 +93,7 @@ public class BarcodeScanner extends CordovaPlugin {
 			filter.addAction(BarcodeScanner.ACTION_BARCODE_REQUEST_FAILED);
 
 			// Register
-            webView.getContext().registerReceiver(barcodeReceiver, filter);
+			webView.getContext().registerReceiver(barcodeReceiver, filter);
 			barcodeRegistered = true;
 		}
 
@@ -114,7 +107,7 @@ public class BarcodeScanner extends CordovaPlugin {
 	private PluginResult unregister() {
 		// Unregister
 		if (barcodeRegistered) {
-            webView.getContext().unregisterReceiver(barcodeReceiver);
+			webView.getContext().unregisterReceiver(barcodeReceiver);
 			barcodeRegistered = false;
 		}
 
@@ -128,22 +121,22 @@ public class BarcodeScanner extends CordovaPlugin {
 	// Utility - Sender
 	private void barcodeSender (String event, String data) {
 		// Data
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("action", event);
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("action", event);
 			obj.put("data", data);
-        }
+		}
 		catch (JSONException e) {
 			return;
-        }
+		}
 
 		// Result
 		PluginResult result = new PluginResult(PluginResult.Status.OK, obj);
-        result.setKeepCallback(true);
+		result.setKeepCallback(true);
 
 		// Event
 		if (barcodeContext != null) {
-            barcodeContext.sendPluginResult(result);
+			barcodeContext.sendPluginResult(result);
 		}
 	}
 
@@ -177,7 +170,7 @@ public class BarcodeScanner extends CordovaPlugin {
 				}
 
 				// Event
-                barcodeSender(event, value);
+				barcodeSender(event, value);
 			}
 
 			// Request Failed
@@ -187,7 +180,7 @@ public class BarcodeScanner extends CordovaPlugin {
 
 				String value = null;
 				if (result == BarcodeScanner.ERROR_BARCODE_DECODING_TIMEOUT) {
-                	value = "Decode Timeout";
+					value = "Decode Timeout";
 				}
 				else if (result == BarcodeScanner.ERROR_BARCODE_ERROR_ALREADY_OPENED) {
 					value = "Already opened";
@@ -206,7 +199,7 @@ public class BarcodeScanner extends CordovaPlugin {
 				// BarcodeScanner.ERROR_NO_RESPONSE
 
 				// Event
-                barcodeSender("bluebird.barcodeError", value);
+				barcodeSender("bluebird.barcodeError", value);
 			}
 		}
 	};
