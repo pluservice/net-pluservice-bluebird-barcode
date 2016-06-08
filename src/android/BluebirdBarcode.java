@@ -16,7 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BarcodeScanner extends CordovaPlugin {
+public class BluebirdBarcode extends CordovaPlugin {
 	// Constants
 	public static final String ACTION_BARCODE_CLOSE           = "kr.co.bluebird.android.bbapi.action.BARCODE_CLOSE";
 	public static final String ACTION_BARCODE_DECODING_DATA   = "kr.co.bluebird.android.bbapi.action.BARCODE_CALLBACK_DECODING_DATA";
@@ -95,9 +95,9 @@ public class BarcodeScanner extends CordovaPlugin {
 		if (!barcodeRegistered) {
 			// Filter
 			IntentFilter filter = new IntentFilter();
-			filter.addAction(BarcodeScanner.ACTION_BARCODE_DECODING_DATA);
-			filter.addAction(BarcodeScanner.ACTION_BARCODE_REQUEST_SUCCESS);
-			filter.addAction(BarcodeScanner.ACTION_BARCODE_REQUEST_FAILED);
+			filter.addAction(BluebirdBarcode.ACTION_BARCODE_DECODING_DATA);
+			filter.addAction(BluebirdBarcode.ACTION_BARCODE_REQUEST_SUCCESS);
+			filter.addAction(BluebirdBarcode.ACTION_BARCODE_REQUEST_FAILED);
 
 			// Register
 			webView.getContext().registerReceiver(barcodeReceiver, filter);
@@ -153,15 +153,15 @@ public class BarcodeScanner extends CordovaPlugin {
 		public void onReceive(Context context, Intent intent) {
 			// Parameters
 			String action = intent.getAction();
-			int seq = intent.getIntExtra(BarcodeScanner.EXTRA_INT_DATA3, 0);
+			int seq = intent.getIntExtra(BluebirdBarcode.EXTRA_INT_DATA3, 0);
 
 			// Decode Data
-			if (action.equals(BarcodeScanner.ACTION_BARCODE_DECODING_DATA)) {
+			if (action.equals(BluebirdBarcode.ACTION_BARCODE_DECODING_DATA)) {
 				String event = null;
 				String value = null;
 				try {
 					// Data
-					byte[] data = intent.getByteArrayExtra(BarcodeScanner.EXTRA_DECODING_DATA);
+					byte[] data = intent.getByteArrayExtra(BluebirdBarcode.EXTRA_DECODING_DATA);
 					if (data == null) {
 						throw new IllegalArgumentException();
 					}
@@ -181,29 +181,29 @@ public class BarcodeScanner extends CordovaPlugin {
 			}
 
 			// Request Failed
-			if (action.equals(BarcodeScanner.ACTION_BARCODE_REQUEST_FAILED)) {
+			if (action.equals(BluebirdBarcode.ACTION_BARCODE_REQUEST_FAILED)) {
 				// Result
-				int result = intent.getIntExtra(BarcodeScanner.EXTRA_INT_DATA2, 0);
+				int result = intent.getIntExtra(BluebirdBarcode.EXTRA_INT_DATA2, 0);
 
 				String value = null;
-				if (result == BarcodeScanner.ERROR_BARCODE_DECODING_TIMEOUT) {
+				if (result == BluebirdBarcode.ERROR_BARCODE_DECODING_TIMEOUT) {
 					value = "Decode Timeout";
 				}
-				else if (result == BarcodeScanner.ERROR_BARCODE_ERROR_ALREADY_OPENED) {
+				else if (result == BluebirdBarcode.ERROR_BARCODE_ERROR_ALREADY_OPENED) {
 					value = "Already opened";
 				}
-				else if (result == BarcodeScanner.ERROR_BARCODE_ERROR_USE_TIMEOUT) {
+				else if (result == BluebirdBarcode.ERROR_BARCODE_ERROR_USE_TIMEOUT) {
 					value = "Use Timeout";
 				}
-				else if (result == BarcodeScanner.ERROR_NOT_SUPPORTED) {
+				else if (result == BluebirdBarcode.ERROR_NOT_SUPPORTED) {
 					value = "Not Supoorted";
 				}
 				else {
 					value = String.valueOf(result);
 				}
-				// BarcodeScanner.ERROR_BATTERY_LOW
-				// BarcodeScanner.ERROR_FAILED
-				// BarcodeScanner.ERROR_NO_RESPONSE
+				// BluebirdBarcode.ERROR_BATTERY_LOW
+				// BluebirdBarcode.ERROR_FAILED
+				// BluebirdBarcode.ERROR_NO_RESPONSE
 
 				// Event
 				barcodeSender("bluebird.barcodeError", value);
