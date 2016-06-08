@@ -18,6 +18,8 @@ import org.json.JSONObject;
 
 public class BluebirdBarcode extends CordovaPlugin {
 	// Constants
+	public static final String TAG = "Bluebird Barcode Plugin";
+
 	public static final String ACTION_BARCODE_CLOSE           = "kr.co.bluebird.android.bbapi.action.BARCODE_CLOSE";
 	public static final String ACTION_BARCODE_DECODING_DATA   = "kr.co.bluebird.android.bbapi.action.BARCODE_CALLBACK_DECODING_DATA";
 	public static final String ACTION_BARCODE_OPEN            = "kr.co.bluebird.android.bbapi.action.BARCODE_OPEN";
@@ -49,7 +51,7 @@ public class BluebirdBarcode extends CordovaPlugin {
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
 		// Execute
 		try {
-			Log.d("BBPlugin -> Action: " + action);
+			Log.d(BluebirdBarcode.TAG, "Action: " + action);
 
 			// Context
 			barcodeContext = callbackContext;
@@ -70,12 +72,12 @@ public class BluebirdBarcode extends CordovaPlugin {
 			}
 
 			// Return
-			Log.d("BBPlugin -> Result Sending");
+			Log.d(BluebirdBarcode.TAG, "Result Sending");
 			callbackContext.sendPluginResult(result);
-			Log.d("BBPlugin -> Result Sended");
+			Log.d(BluebirdBarcode.TAG, "Result Sended");
 		}
 		catch (Exception E) {
-			Log.d("BBPlugin -> Error: " + E.getMessage());
+			Log.d(BluebirdBarcode.TAG, "Error: " + E.getMessage());
 
 			// Error
 			callbackContext.sendPluginResult(
