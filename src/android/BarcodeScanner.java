@@ -48,6 +48,8 @@ public class BarcodeScanner extends CordovaPlugin {
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
 		// Execute
 		try {
+			log.d("Bluebird Barcode Plugin -> Action: " + action);
+
 			// Context
 			barcodeContext = callbackContext;
 
@@ -67,9 +69,13 @@ public class BarcodeScanner extends CordovaPlugin {
 			}
 
 			// Return
+			log.d("Bluebird Barcode Plugin -> Result Sending");
 			callbackContext.sendPluginResult(result);
+			log.d("Bluebird Barcode Plugin -> Result Sended");
 		}
 		catch (Exception E) {
+			log.d("Bluebird Barcode Plugin -> Error: " + E.getMessage());
+
 			// Error
 			callbackContext.sendPluginResult(
 				new PluginResult(
