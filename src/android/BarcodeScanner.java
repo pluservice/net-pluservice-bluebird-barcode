@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 import java.lang.Exception;
 import java.lang.IllegalArgumentException;
@@ -48,7 +49,7 @@ public class BarcodeScanner extends CordovaPlugin {
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
 		// Execute
 		try {
-			log.d("Bluebird Barcode Plugin -> Action: " + action);
+			Log.d("BBPlugin -> Action: " + action);
 
 			// Context
 			barcodeContext = callbackContext;
@@ -69,12 +70,12 @@ public class BarcodeScanner extends CordovaPlugin {
 			}
 
 			// Return
-			log.d("Bluebird Barcode Plugin -> Result Sending");
+			Log.d("BBPlugin -> Result Sending");
 			callbackContext.sendPluginResult(result);
-			log.d("Bluebird Barcode Plugin -> Result Sended");
+			Log.d("BBPlugin -> Result Sended");
 		}
 		catch (Exception E) {
-			log.d("Bluebird Barcode Plugin -> Error: " + E.getMessage());
+			Log.d("BBPlugin -> Error: " + E.getMessage());
 
 			// Error
 			callbackContext.sendPluginResult(
